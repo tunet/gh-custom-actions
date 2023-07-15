@@ -59,6 +59,7 @@ jobs:
         run: ls
       - name: Deploy site
         uses: ./.github/actions/deploy-s3-javascript
+        id: deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -66,3 +67,6 @@ jobs:
           bucket: tunet-static-site
           bucket-region: us-east-1
           dist-folder: ./dist
+      - name: Output information
+        run: |
+          echo "Live url: ${{ steps.deploy.outputs.website-url }}"
